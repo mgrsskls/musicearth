@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>music earth - by Michael Großklaus</title>
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="styles.css">
+    <script src="earth.js" defer></script>
+    <script src="audio.js" defer></script>
+    <script src="misc.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js" defer></script>
+  </head>
+  <body>
+    <div id="FileDrop" class="Overlay"></div>
+    <audio class="hidden" id="Audio"></audio>
+    <input class="hidden" id="FileUpload" type="file" accept="audio/*">
+
+    <div class="ChooseInput" id="ChooseInput">
+      <button class="ChooseInput-option" data-type="file">
+        Select an audio file
+      </button>
+      <button class="ChooseInput-option" data-type="mic" data-active-text="Deactivate microphone">
+        Activate microphone
+      </button>
+    </div>
+
+    <div class="SongInfo">
+      <button class="SongInfo-button" id="AudioButton" data-play-text="Play" data-pause-text="Pause">Play</button>
+      <p class="SongInfo-title" id="FileTitle"></p>
+    </div>
+
+    <div class="Settings">
+      <label class="Settings-item">
+        Threshold:
+        <input class="Settings-input" id="ThresholdPick" type="range" min="100" value="145" max="190">
+      </label>
+      <label class="Settings-item">
+        Color:
+        <input class="Settings-input" id="ColorPick" type="range" min="-100" value="60" max="220">
+      </label>
+      <label class="Settings-item">
+        Scale:
+        <input class="Settings-input" id="ScalePick" type="range" min="20" value="60" max="100">
+      </label>
+    </div>
+
+    <div id="ProgressBar"></div>
+
+    <div class="SvgContainer" id="SvgContainer">
+      <svg id="Svg" class="scaled-down" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1137 557"></svg>
+      <noscript>
+        <p class="NoJs">This website requires Javascript.</p>
+      </noscript>
+    </div>
+    <div class="InformationButton-container">
+      <button class="InformationButton" id="InformationButton" title="Information">i</button>
+    </div>
+    <div id="Information" class="Overlay">
+      <div class="Overlay-content">
+        <h3>Created by</h3>
+        <p>
+          <strong>Michael Großklaus</strong><br>
+          <a href="https://www.mgrossklaus.de" target="_blank" title="Michael Großklaus - Freelance frontend-developer Hamburg">mgrossklaus.de</a><br>
+          <a href="https://www.twitter.com/mgrossklaus" target="_blank" rel="noopener">@mgrossklaus</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
