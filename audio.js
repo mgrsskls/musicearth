@@ -2,35 +2,37 @@
 
 (() => {
   const elements = {
-    fileUpload: document.getElementById('FileUpload'),
-    fileDrop: document.getElementById('FileDrop'),
-    fileTitle: document.getElementById('FileTitle'),
-    audio: document.getElementById('Audio'),
-    progressBar: document.getElementById('ProgressBar'),
-    audioButton: document.getElementById('AudioButton'),
-    circles: document.getElementsByTagName('circle'),
-    options: document.getElementById('ChooseInput'),
-    optionFileInput: document.querySelector('.ChooseInput-option[data-type="file"]'),
+    fileUpload: document.getElementById("FileUpload"),
+    fileDrop: document.getElementById("FileDrop"),
+    fileTitle: document.getElementById("FileTitle"),
+    audio: document.getElementById("Audio"),
+    progressBar: document.getElementById("ProgressBar"),
+    audioButton: document.getElementById("AudioButton"),
+    circles: document.getElementsByTagName("circle"),
+    options: document.getElementById("ChooseInput"),
+    optionFileInput: document.querySelector(
+      '.ChooseInput-option[data-type="file"]'
+    ),
     optionMic: document.querySelector('.ChooseInput-option[data-type="mic"]'),
-    thresholdPick: document.getElementById('ThresholdPick'),
-    colorPick: document.getElementById('ColorPick'),
-    scalePick: document.getElementById('ScalePick'),
-    svgContainer: document.getElementById('SvgContainer'),
-    svg: document.getElementById('Svg'),
+    thresholdPick: document.getElementById("ThresholdPick"),
+    colorPick: document.getElementById("ColorPick"),
+    scalePick: document.getElementById("ScalePick"),
+    svgContainer: document.getElementById("SvgContainer"),
+    svg: document.getElementById("Svg")
   };
 
   const text = {
-    not_supported: 'Not supported.',
+    not_supported: "Not supported."
   };
 
   const classes = {
-    playButton: 'SongInfo-button--play',
-    pauseButton: 'SongInfo-button--pause',
-    no_js: 'NoJs',
-    active: 'is-active',
-    audio_selected: 'audio-selected',
-    audio_active: 'audio-active',
-    scaled_down: 'scaled-down',
+    playButton: "SongInfo-button--play",
+    pauseButton: "SongInfo-button--pause",
+    no_js: "NoJs",
+    active: "is-active",
+    audio_selected: "audio-selected",
+    audio_active: "audio-active",
+    scaled_down: "scaled-down"
   };
 
   let threshold = parseInt(elements.thresholdPick.value, 10);
@@ -39,58 +41,70 @@
 
   let defaultCircleColor;
 
-  elements.thresholdPick.addEventListener('input', (e) => {
+  elements.thresholdPick.addEventListener("input", e => {
     threshold = parseInt(e.target.value, 10);
   });
 
-  elements.colorPick.addEventListener('input', (e) => {
+  elements.colorPick.addEventListener("input", e => {
     color = parseInt(e.target.value, 10);
   });
 
   const colorPickRange =
     parseInt(elements.colorPick.min, 10) + parseInt(elements.colorPick.max, 10);
-  elements.scalePick.addEventListener('input', (e) => {
+  elements.scalePick.addEventListener("input", e => {
     scale = colorPickRange - e.target.value;
   });
 
   const circlesLen = 512;
   const colorMulti = 320 / circlesLen;
-
+  const micButtonText = elements.optionMic.innerText;
   const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const context = new AudioContext();
-  const analyser = context.createAnalyser();
-  const dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-  let source = context.createMediaElementSource(elements.audio);
+  let context;
+  let analyser;
+  let dataArray;
+  let source;
   let mode = false;
   let init = true;
-
-  source.connect(context.destination);
-  source.connect(analyser);
-
-  const micButtonText = elements.optionMic.innerText;
-
   let animationFrame;
   let duration;
   let stream;
+  let audioInitialized;
 
-  analyser.fftSize = 2048;
-
-  elements.fileDrop.addEventListener('drop', e => dropHandler(e), false);
-  elements.fileDrop.addEventListener('dragover', e => dragOverHandler(e), false);
-  elements.fileDrop.addEventListener('dragend', e => dragEndHandler(e), false);
-  elements.fileUpload.addEventListener('change', e => changeFileHandling(e), false);
-  elements.audioButton.addEventListener('click', e => audioButtonHandling(e), false);
-  elements.audio.addEventListener('play', playHandling, false);
-  elements.audio.addEventListener('pause', pauseHandling, false);
+  elements.fileDrop.addEventListener("drop", e => dropHandler(e), false);
+  elements.fileDrop.addEventListener(
+    "dragover",
+    e => dragOverHandler(e),
+    false
+  );
+  elements.fileDrop.addEventListener("dragend", e => dragEndHandler(e), false);
+  elements.fileUpload.addEventListener(
+    "change",
+    e => changeFileHandling(e),
+    false
+  );
+  elements.audioButton.addEventListener(
+    "click",
+    e => audioButtonHandling(e),
+    false
+  );
+  elements.audio.addEventListener("play", playHandling, false);
+  elements.audio.addEventListener("pause", pauseHandling, false);
 
   // Gets audio file duration
-  elements.audio.addEventListener('canplaythrough', () => {
-    duration = elements.audio.duration;
-  }, false);
+  elements.audio.addEventListener(
+    "canplaythrough",
+    () => {
+      duration = elements.audio.duration;
+    },
+    false
+  );
 
-  elements.optionFileInput.addEventListener('click', (e) => {
+  elements.optionFileInput.addEventListener("click", e => {
     const elem = e.target;
+
+    if (!audioInitialized) {
+      initAudio();
+    }
 
     if (elem.classList.contains(classes.active)) {
       activateFileInput(true);
@@ -100,8 +114,12 @@
     }
   });
 
-  elements.optionMic.addEventListener('click', (e) => {
+  elements.optionMic.addEventListener("click", e => {
     const elem = e.target;
+
+    if (!audioInitialized) {
+      initAudio();
+    }
 
     if (elem.classList.contains(classes.active)) {
       deactivateMic();
@@ -111,12 +129,24 @@
     }
   });
 
+  function initAudio() {
+    context = new AudioContext();
+    analyser = context.createAnalyser();
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    source = context.createMediaElementSource(elements.audio);
+    audioInitialized = true;
+
+    source.connect(context.destination);
+    source.connect(analyser);
+
+    analyser.fftSize = 2048;
+  }
 
   /* file input
    ********************************************************* */
 
   function activateFileInput(openDialog) {
-    mode = 'file';
+    mode = "file";
     elements.optionFileInput.classList.add(classes.active);
 
     if (openDialog) {
@@ -135,24 +165,25 @@
   }
 
   function stopFileInputAnalyzing() {
-    elements.audio.src = '';
+    elements.audio.src = "";
     stopDrawing();
   }
-
 
   /* mic
    ********************************************************* */
 
   function activateMic() {
-    mode = 'mic';
+    mode = "mic";
 
     init = false;
 
     try {
-      elements.optionMic.innerText = elements.optionMic.getAttribute('data-active-text');
+      elements.optionMic.innerText = elements.optionMic.getAttribute(
+        "data-active-text"
+      );
       elements.optionMic.classList.add(classes.active);
 
-      navigator.mediaDevices.getUserMedia({ audio: true }).then((s) => {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
         stream = s;
         source = context.createMediaStreamSource(stream);
         source.connect(analyser);
@@ -186,7 +217,6 @@
     pauseDrawing();
   }
 
-
   /* handling
    ********************************************************* */
 
@@ -209,12 +239,15 @@
 
     elements.audio.play();
 
-    elements.fileUpload.value = '';
+    elements.fileUpload.value = "";
   }
 
   function playHandling() {
     draw();
-    elements.audioButton.setAttribute('title', elements.audioButton.getAttribute('data-pause-text'));
+    elements.audioButton.setAttribute(
+      "title",
+      elements.audioButton.getAttribute("data-pause-text")
+    );
     elements.audioButton.classList.remove(classes.playButton);
     elements.audioButton.classList.add(classes.pauseButton);
 
@@ -224,14 +257,16 @@
   function pauseHandling() {
     pauseDrawing();
 
-    elements.audioButton.setAttribute('title', elements.audioButton.getAttribute('data-play-text'));
+    elements.audioButton.setAttribute(
+      "title",
+      elements.audioButton.getAttribute("data-play-text")
+    );
     elements.audioButton.classList.add(classes.playButton);
     elements.audioButton.classList.remove(classes.pauseButton);
 
     document.body.classList.remove(classes.audio_active);
-    elements.svgContainer.removeAttribute('style');
+    elements.svgContainer.removeAttribute("style");
   }
-
 
   /* drag'n'drop
    ********************************************************* */
@@ -245,7 +280,7 @@
     if (dt.items) {
       // Use DataTransferItemList interface to access the file(s)
       for (i = 0; i < dt.items.length; i += 1) {
-        if (dt.items[i].kind === 'file') {
+        if (dt.items[i].kind === "file") {
           const f = dt.items[i].getAsFile();
           elements.audio.src = URL.createObjectURL(f);
           elements.fileTitle.innerText = f.name;
@@ -292,7 +327,6 @@
     activateFileInput();
   }
 
-
   /* drawing
    ********************************************************* */
 
@@ -316,13 +350,13 @@
       } else {
         TweenLite.to(circle, 0, {
           scale: val / scale,
-          fill: `hsl(${(i * colorMulti) + color}, 100%, 50%)`,
-          transformOrigin: 'center center',
+          fill: `hsl(${i * colorMulti + color}, 100%, 50%)`,
+          transformOrigin: "center center"
         });
       }
     }
 
-    if (mode === 'file') {
+    if (mode === "file") {
       setProgress();
     }
   }
@@ -340,37 +374,42 @@
 
     elements.audioButton.classList.remove(classes.playButton);
     elements.audioButton.classList.remove(classes.pauseButton);
-    elements.fileTitle.innerText = '';
-    elements.progressBar.removeAttribute('style');
+    elements.fileTitle.innerText = "";
+    elements.progressBar.removeAttribute("style");
   }
 
   function clearAnimation(circle) {
     TweenLite.to(circle, 0.75, {
       scale: 1,
-      fill: defaultCircleColor,
+      fill: defaultCircleColor
     });
   }
 
   function setProgress() {
-    elements.progressBar.style.transform =
-      `translateX(-${100 - (100 * (elements.audio.currentTime / duration))}%)`;
+    elements.progressBar.style.transform = `translateX(-${100 -
+      100 * (elements.audio.currentTime / duration)}%)`;
   }
 
   if (AudioContext) {
     for (let i = 0; i < circlesLen; i += 1) {
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttributeNS(null, 'r', 1);
-      circle.setAttribute('cx', earthPositions[i].x);
-      circle.setAttribute('cy', earthPositions[i].y);
+      const circle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      circle.setAttributeNS(null, "r", 1);
+      circle.setAttribute("cx", earthPositions[i].x);
+      circle.setAttribute("cy", earthPositions[i].y);
 
       elements.svg.appendChild(circle);
     }
 
-    defaultCircleColor = window.getComputedStyle(elements.svg.querySelector('circle')).fill;
+    defaultCircleColor = window.getComputedStyle(
+      elements.svg.querySelector("circle")
+    ).fill;
   } else {
-    const p = document.createElement('p');
+    const p = document.createElement("p");
     p.innerText = text.not_supported;
-    p.setAttribute('class', classes.no_js);
+    p.setAttribute("class", classes.no_js);
     elements.svgContainer.appendChild(p);
 
     elements.svg.remove();
