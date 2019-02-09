@@ -4,10 +4,10 @@ const eslint = require("gulp-eslint");
 const gulp = require("gulp");
 const rollup = require("rollup");
 const terser = require("rollup-plugin-terser");
-const postcss = require("gulp-postcss");
+// const postcss = require("gulp-postcss");
 const stylelint = require("gulp-stylelint");
 
-const buildFolder = "build/";
+const buildFolder = "docs/";
 const jsFiles = "source/js/index.js";
 const cssFiles = "source/css/index.css";
 const jsDist = `${buildFolder}js/`;
