@@ -1,6 +1,8 @@
-/* globals earthPositions, TweenLite */
+import earthPositions from "./_earth.js";
+import TweenLite from "../../node_modules/gsap/TweenLite.js";
+import "../../node_modules/gsap/CSSPlugin.js";
 
-(() => {
+export default () => {
   const elements = {
     fileUpload: document.getElementById("FileUpload"),
     fileDrop: document.getElementById("FileDrop"),
@@ -415,4 +417,4 @@
     elements.svg.remove();
     elements.options.remove();
   }
-})();
+};

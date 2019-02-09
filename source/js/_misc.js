@@ -1,14 +1,14 @@
-(() => {
+export default () => {
   const elements = {
-    svgContainer: document.getElementById('SvgContainer'),
-    informationButton: document.getElementById('InformationButton'),
-    information: document.getElementById('Information'),
+    svgContainer: document.getElementById("SvgContainer"),
+    informationButton: document.getElementById("InformationButton"),
+    information: document.getElementById("Information")
   };
 
   const classes = {
-    active: 'is-active',
-    audio_active: 'audio-active',
-    out_of_viewport: 'out-of-viewport',
+    active: "is-active",
+    audio_active: "audio-active",
+    out_of_viewport: "out-of-viewport"
   };
 
   const midpointX = window.innerWidth / 2;
@@ -22,16 +22,20 @@
    ********************************************************* */
 
   function addMoveMapListener() {
-    document.addEventListener('mousemove', e => rotate(e), false);
-    document.addEventListener('mouseout', (event) => {
-      if (!document.body.classList.contains(classes.audio_active)) return;
+    document.addEventListener("mousemove", e => rotate(e), false);
+    document.addEventListener(
+      "mouseout",
+      event => {
+        if (!document.body.classList.contains(classes.audio_active)) return;
 
-      const e = event || window.event;
-      const from = e.relatedTarget || e.toElement;
-      if (!from || from.nodeName === 'HTML') {
-        elements.svgContainer.classList.add(classes.out_of_viewport);
-      }
-    }, false);
+        const e = event || window.event;
+        const from = e.relatedTarget || e.toElement;
+        if (!from || from.nodeName === "HTML") {
+          elements.svgContainer.classList.add(classes.out_of_viewport);
+        }
+      },
+      false
+    );
   }
 
   function rotate(e) {
@@ -43,18 +47,17 @@
     elements.svgContainer.style.transform = `perspective(1000px) rotateY(${valX}deg) rotateX(${valY}deg)`;
   }
 
-
   /* opening the info window
    ********************************************************* */
 
   function addInformationButtonListener() {
-    elements.informationButton.addEventListener('click', (e) => {
+    elements.informationButton.addEventListener("click", e => {
       e.preventDefault();
 
       informationOverlayHandling();
     });
 
-    elements.information.addEventListener('click', (e) => {
+    elements.information.addEventListener("click", e => {
       e.stopPropagation();
 
       if (e.target === elements.information) {
@@ -71,4 +74,4 @@
   function closeInformationOverlay() {
     elements.information.classList.remove(classes.active);
   }
-})();
+};

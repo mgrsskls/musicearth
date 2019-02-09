@@ -3,12 +3,29 @@
   --transition: all .2s ease;
 }
 
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, small, strong, ul, li, button, input {
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+small,
+strong,
+ul,
+li,
+button,
+input {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
+  font-size: 100%;
   vertical-align: baseline;
   background: none;
 }
@@ -19,7 +36,7 @@ html {
 
 body {
   overflow: hidden;
-  background: hsl(196, 50%, 7.5%) radial-gradient(rgba(255,255,255,.15), rgba(255,255,255,0)) center no-repeat;
+  background: hsl(196, 50%, 7.5%) radial-gradient(rgba(255, 255, 255, .15), rgba(255, 255, 255, 0)) center no-repeat;
   background-size: 125% 125%;
   display: flex;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -110,12 +127,15 @@ p {
   right: 0;
   transform: translateX(-100%);
   height: .15em;
-  background: linear-gradient(to right,
-    hsl(0, 100%, 50%),
-    hsl(80, 100%, 50%),
-    hsl(160, 100%, 50%),
-    hsl(240, 100%, 50%),
-    hsl(320, 100%, 50%)) no-repeat;
+  background:
+    linear-gradient(
+      to right,
+      hsl(0, 100%, 50%),
+      hsl(80, 100%, 50%),
+      hsl(160, 100%, 50%),
+      hsl(240, 100%, 50%),
+      hsl(320, 100%, 50%)
+    ) no-repeat;
 }
 
 .ChooseInput,
@@ -184,7 +204,7 @@ body:not(.audio-selected) .ChooseInput {
   font-size: .5em;
   margin: 0 1em 0 0;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255, .25);
+  border: 1px solid rgba(255, 255, 255, .25);
 }
 
 .ChooseInput-option.is-active::before {
@@ -299,7 +319,7 @@ body:not(.audio-selected) .ChooseInput {
 #Svg {
   width: 100%;
   height: 100%;
-  transition: all 2s cubic-bezier(0,0,0,1);
+  transition: all 2s cubic-bezier(0, 0, 0, 1);
   opacity: 1;
   transform: scale(1);
   will-change: transform;
@@ -311,7 +331,7 @@ body:not(.audio-selected) .ChooseInput {
 }
 
 circle {
-  fill: rgba(255,255,255, .75);
+  fill: rgba(255, 255, 255, .75);
 }
 
 .InformationButton-container {
