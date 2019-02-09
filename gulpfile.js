@@ -17,7 +17,7 @@ const jsDist = `${buildFolder}js/`;
 const cssDist = `${buildFolder}css/`;
 const htmlFile = "index.html";
 
-gulp.task("inline:css", () => {
+gulp.task("build:html", () => {
   return gulp
     .src(htmlFile)
     .pipe(gulp.dest(buildFolder))
@@ -90,7 +90,7 @@ gulp.task(
   gulp.series(
     "clean",
     gulp.parallel("build:js", "build:css"),
-    "inline:css",
+    "build:html",
     "delete:css"
   )
 );
