@@ -1,37 +1,12 @@
+@import "_reset.css";
+
 :root {
   --highlight-color: deeppink;
   --transition: all .2s ease;
 }
 
-html,
-body,
-div,
-span,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-small,
-strong,
-ul,
-li,
-button,
-input {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-  background: none;
-}
-
 html {
-  font-size: 10px;
+  font-size: 62.5%;
 }
 
 body {
@@ -44,13 +19,6 @@ body {
   line-height: 1;
   height: 100vh;
   color: #fff;
-}
-
-button,
-a {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
 }
 
 h3 {
