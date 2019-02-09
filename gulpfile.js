@@ -21,7 +21,7 @@ gulp.task("inline:css", () => {
   return gulp
     .src(htmlFile)
     .pipe(gulp.dest(buildFolder))
-    .pipe(replace(sourceFolder, "/"))
+    .pipe(replace(sourceFolder, ""))
     .pipe(
       inlineSource({
         compress: false
