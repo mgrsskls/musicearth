@@ -1,4 +1,4 @@
-.InformationButtonContainer {
+.InformationButton {
   position: absolute;
   top: 0;
   right: 0;
@@ -7,7 +7,7 @@
   height: 20vh;
 }
 
-.InformationButton {
+.InformationButton-element {
   position: absolute;
   top: 2rem;
   right: 2rem;
@@ -23,8 +23,8 @@
   transition: var(--transition);
 }
 
-.InformationButton:hover,
-.InformationButton:focus {
+.InformationButton-element:hover,
+.InformationButton-element:focus {
   background: var(--highlight-color);
   color: #fff;
 }

@@ -28,7 +28,7 @@
 
 .audio-active .ChooseInput,
 .audio-active .SongInfo,
-.audio-active .InformationButton-container,
+.audio-active .InformationButton,
 .audio-active .Settings {
   opacity: .1;
   transition: opacity .5s ease-in;
@@ -36,7 +36,7 @@
 
 .audio-active .ChooseInput:hover,
 .audio-active .SongInfo:hover,
-.audio-active .InformationButton-container:hover,
+.audio-active .InformationButton:hover,
 .audio-active .Settings:hover {
   opacity: 1;
   transition: opacity .25s ease-out;
