@@ -1,0 +1,33 @@
+.Settings {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  padding: 0 2rem 2rem;
+  opacity: 0;
+}
+
+.Settings-item {
+  display: flex;
+  float: right;
+  margin: .5em 0 0 1.5em;
+}
+
+.Settings-input {
+  width: 5em;
+  margin-left: .5rem;
+}
+
+@media (max-width: 40em) {
+  .Settings {
+    text-align: center;
+    left: 0;
+  }
+}
+
+@media (min-width: 40em) {
+  .Settings {
+    left: 50%;
+    padding-top: 5em;
+  }
+}

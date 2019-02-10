@@ -1,0 +1,29 @@
+.SvgContainer {
+  width: 80vw;
+  height: 100%;
+  max-height: 80vh;
+  margin: 0 auto;
+  align-self: center;
+}
+
+.out-of-viewport {
+  transform: perspective(1000px) rotateY(0) rotateX(0) !important;
+}
+
+#Svg {
+  width: 100%;
+  height: 100%;
+  transition: all 2s cubic-bezier(0, 0, 0, 1);
+  opacity: 1;
+  transform: scale(1);
+  will-change: transform;
+}
+
+#Svg.scaled-down {
+  transform: scale(.25);
+  opacity: 0;
+}
+
+circle {
+  fill: rgba(255, 255, 255, .75);
+}

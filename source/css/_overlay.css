@@ -1,0 +1,17 @@
+.Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.Overlay.is-active {
+  background: #111e23;
+  z-index: 3;
+}
+
+.Overlay-title {
+  display: block;
+  margin: 0 0 1em;
+}

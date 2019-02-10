@@ -1,0 +1,44 @@
+.InformationButtonContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 50%;
+  z-index: 4;
+  height: 20vh;
+}
+
+.InformationButton {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: block;
+  width: 1em;
+  height: 1em;
+  background: #fff;
+  color: #333;
+  border-radius: 50%;
+  font-family: Times, Georgia, serif;
+  font-size: 1.25em;
+  font-style: italic;
+  transition: var(--transition);
+}
+
+.InformationButton:hover,
+.InformationButton:focus {
+  background: var(--highlight-color);
+  color: #fff;
+}
+
+#Information {
+  display: flex;
+  background: #111e23;
+  text-align: center;
+  align-items: center;
+  justify-content: space-around;
+  transition: opacity .25s ease;
+}
+
+#Information:not(.is-active) {
+  z-index: -1;
+  opacity: 0;
+}

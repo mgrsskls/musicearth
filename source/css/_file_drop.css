@@ -1,0 +1,18 @@
+#FileDrop {
+  z-index: 1;
+}
+
+#FileDrop.is-active {
+  z-index: 2;
+}
+
+#FileDrop.is-active::after {
+  content: 'Drop it!';
+  display: block;
+  font-weight: bold;
+  font-size: 5em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,56 @@
+.ChooseInput {
+  position: absolute;
+}
+
+.audio-selected .ChooseInput {
+  top: 0;
+  left: 0;
+  right: 50%;
+  z-index: 2;
+  padding: 2rem 2rem 0;
+  height: 20vh;
+  min-width: 12em;
+  white-space: nowrap;
+}
+
+body:not(.audio-selected) .ChooseInput {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.ChooseInput-option {
+  position: relative;
+  padding: 0 0 0 1.25em;
+  margin: 0 1.5em .5em 0;
+  float: left;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font-size: inherit;
+}
+
+.ChooseInput-option::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 1em;
+  height: 1em;
+  font-size: .5em;
+  margin: 0 1em 0 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .25);
+}
+
+.ChooseInput-option.is-active::before {
+  border-color: var(--highlight-color);
+}
+
+.ChooseInput-option:hover,
+.ChooseInput-option:focus {
+  text-decoration: underline;
+}
