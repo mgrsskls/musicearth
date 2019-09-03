@@ -15,7 +15,7 @@ export default () => {
   const midpointY = window.innerHeight / 2;
   const rotateMulti = 10;
 
-  addMoveMapListener();
+  // addMoveMapListener();
   addInformationButtonListener();
 
   /* moving the map

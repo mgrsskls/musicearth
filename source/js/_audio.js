@@ -1,6 +1,6 @@
+"use strict";
+
 import earthPositions from "./_earth.js";
-import TweenLite from "../../node_modules/gsap/TweenLite.js";
-import "../../node_modules/gsap/CSSPlugin.js";
 
 export default () => {
   const elements = {
@@ -17,50 +17,35 @@ export default () => {
     ),
     optionMic: document.querySelector('.ChooseInput-option[data-type="mic"]'),
     thresholdPick: document.getElementById("ThresholdPick"),
-    colorPick: document.getElementById("ColorPick"),
-    scalePick: document.getElementById("ScalePick"),
     svgContainer: document.getElementById("SvgContainer"),
     svg: document.getElementById("Svg")
   };
 
   const text = {
-    not_supported: "Not supported."
+    notSupported: "Not supported."
   };
 
   const classes = {
     playButton: "SongInfo-button--play",
     pauseButton: "SongInfo-button--pause",
-    no_js: "NoJs",
+    noJs: "NoJs",
     active: "is-active",
-    audio_selected: "audio-selected",
-    audio_active: "audio-active",
-    scaled_down: "scaled-down"
+    audioSelected: "audio-selected",
+    audioActive: "audio-active",
+    scaledDown: "scaled-down"
   };
 
   let threshold = parseInt(elements.thresholdPick.value, 10);
-  let color = parseInt(elements.colorPick.value, 10);
-  let scale = parseInt(elements.scalePick.value, 10);
-
-  let defaultCircleColor;
 
   elements.thresholdPick.addEventListener("input", e => {
     threshold = parseInt(e.target.value, 10);
   });
 
-  elements.colorPick.addEventListener("input", e => {
-    color = parseInt(e.target.value, 10);
-  });
-
-  const colorPickRange =
-    parseInt(elements.colorPick.min, 10) + parseInt(elements.colorPick.max, 10);
-  elements.scalePick.addEventListener("input", e => {
-    scale = colorPickRange - e.target.value;
-  });
-
   const circlesLen = 512;
   const colorMulti = 320 / circlesLen;
-  const micButtonText = elements.optionMic.innerText;
+  const micButtonText = elements.optionMic.textContent;
   const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const color = 60;
   let context;
   let analyser;
   let dataArray;
@@ -161,7 +146,7 @@ export default () => {
 
     elements.optionFileInput.classList.remove(classes.active);
 
-    document.body.classList.remove(classes.audio_active);
+    document.body.classList.remove(classes.audioActive);
 
     stopFileInputAnalyzing();
   }
@@ -180,7 +165,7 @@ export default () => {
     init = false;
 
     try {
-      elements.optionMic.innerText = elements.optionMic.getAttribute(
+      elements.optionMic.textContent = elements.optionMic.getAttribute(
         "data-active-text"
       );
       elements.optionMic.classList.add(classes.active);
@@ -189,10 +174,19 @@ export default () => {
         stream = s;
         source = context.createMediaStreamSource(stream);
         source.connect(analyser);
+
+        requestAnimationFrame(() => {
+          elements.svg.classList.remove(classes.scaledDown);
+          document.body.classList.add(
+            classes.audioSelected,
+            classes.audioActive
+          );
+        });
+
         draw();
       });
     } catch (e) {
-      alert(text.not_supported);
+      alert(text.notSupported);
     }
   }
 
@@ -203,9 +197,9 @@ export default () => {
 
     mode = false;
 
-    document.body.classList.remove(classes.audio_active);
+    document.body.classList.remove(classes.audioActive);
 
-    elements.optionMic.innerText = micButtonText;
+    elements.optionMic.textContent = micButtonText;
     elements.optionMic.classList.remove(classes.active);
 
     stopMicAnalyzing();
@@ -237,7 +231,7 @@ export default () => {
     const file = e.target.files[0];
 
     elements.audio.src = URL.createObjectURL(file);
-    elements.fileTitle.innerText = file.name;
+    elements.fileTitle.textContent = file.name;
 
     elements.audio.play();
 
@@ -245,13 +239,18 @@ export default () => {
   }
 
   function playHandling() {
+    requestAnimationFrame(() => {
+      elements.svg.classList.remove(classes.scaledDown);
+      document.body.classList.add(classes.audioSelected, classes.audioActive);
+      elements.audioButton.setAttribute(
+        "title",
+        elements.audioButton.getAttribute("data-pause-text")
+      );
+      elements.audioButton.classList.remove(classes.playButton);
+      elements.audioButton.classList.add(classes.pauseButton);
+    });
+
     draw();
-    elements.audioButton.setAttribute(
-      "title",
-      elements.audioButton.getAttribute("data-pause-text")
-    );
-    elements.audioButton.classList.remove(classes.playButton);
-    elements.audioButton.classList.add(classes.pauseButton);
 
     init = false;
   }
@@ -266,7 +265,7 @@ export default () => {
     elements.audioButton.classList.add(classes.playButton);
     elements.audioButton.classList.remove(classes.pauseButton);
 
-    document.body.classList.remove(classes.audio_active);
+    document.body.classList.remove(classes.audioActive);
     elements.svgContainer.removeAttribute("style");
   }
 
@@ -277,24 +276,27 @@ export default () => {
     e.preventDefault();
     // If dropped items aren't files, reject them
     const dt = e.dataTransfer;
-    let i;
 
     if (dt.items) {
+      const itemsLength = dt.items.length;
+
       // Use DataTransferItemList interface to access the file(s)
-      for (i = 0; i < dt.items.length; i += 1) {
+      for (let i = 0; i < itemsLength; i += 1) {
         if (dt.items[i].kind === "file") {
           const f = dt.items[i].getAsFile();
           elements.audio.src = URL.createObjectURL(f);
-          elements.fileTitle.innerText = f.name;
+          elements.fileTitle.textContent = f.name;
           elements.audio.play();
         }
       }
     } else {
+      const filesLength = dt.files.length;
+
       // Use DataTransfer interface to access the file(s)
-      for (i = 0; i < dt.files.length; i += 1) {
+      for (let i = 0; i < filesLength; i += 1) {
         const file = dt.files[i];
         elements.audio.src = URL.createObjectURL(file);
-        elements.fileTitle.innerText = file.name;
+        elements.fileTitle.textContent = file.name;
         elements.audio.play();
       }
     }
@@ -312,11 +314,12 @@ export default () => {
   function dragEndHandler(e) {
     // Remove all of the drag data
     const dt = e.dataTransfer;
-    let i;
 
     if (dt.items) {
+      const itemsLength = dt.items.length;
+
       // Use DataTransferItemList interface to remove the drag data
-      for (i = 0; i < dt.items.length; i += 1) {
+      for (let i = 0; i < itemsLength; i += 1) {
         dt.items.remove(i);
       }
     } else {
@@ -333,28 +336,18 @@ export default () => {
    ********************************************************* */
 
   function draw() {
-    elements.svg.classList.remove(classes.scaled_down);
-    document.body.classList.add(classes.audio_selected);
-    document.body.classList.add(classes.audio_active);
-
-    animationFrame = requestAnimationFrame(draw);
-
-    let i;
+    requestAnimationFrame(draw);
 
     analyser.getByteFrequencyData(dataArray);
 
-    for (i = circlesLen - 1; i >= 0; i -= 1) {
+    for (let i = circlesLen - 1; i >= 0; i -= 1) {
       const val = dataArray[circlesLen - i];
       const circle = elements.circles[i];
 
       if (val < threshold) {
         clearAnimation(circle);
       } else {
-        TweenLite.to(circle, 0, {
-          scale: val / scale,
-          fill: `hsl(${i * colorMulti + color}, 100%, 50%)`,
-          transformOrigin: "center center"
-        });
+        circle.classList.add("animated");
       }
     }
 
@@ -374,22 +367,23 @@ export default () => {
   function stopDrawing() {
     pauseDrawing();
 
-    elements.audioButton.classList.remove(classes.playButton);
-    elements.audioButton.classList.remove(classes.pauseButton);
-    elements.fileTitle.innerText = "";
+    elements.audioButton.classList.remove(
+      classes.playButton,
+      classes.pauseButton
+    );
+    elements.fileTitle.textContent = "";
     elements.progressBar.removeAttribute("style");
   }
 
   function clearAnimation(circle) {
-    TweenLite.to(circle, 0.75, {
-      scale: 1,
-      fill: defaultCircleColor
-    });
+    circle.classList.remove("animated");
   }
 
   function setProgress() {
-    elements.progressBar.style.transform = `translateX(-${100 -
-      100 * (elements.audio.currentTime / duration)}%)`;
+    requestAnimationFrame(() => {
+      elements.progressBar.style.transform = `translateX(-${100 -
+        100 * (elements.audio.currentTime / duration)}%)`;
+    });
   }
 
   if (AudioContext) {
@@ -398,20 +392,22 @@ export default () => {
         "http://www.w3.org/2000/svg",
         "circle"
       );
+      const position = earthPositions[i];
       circle.setAttributeNS(null, "r", 1);
-      circle.setAttribute("cx", earthPositions[i].x);
-      circle.setAttribute("cy", earthPositions[i].y);
+      circle.setAttribute("cx", position.x);
+      circle.setAttribute("cy", position.y);
+      circle.setAttribute("fill", `hsl(${i * colorMulti + color}, 100%, 50%)`);
+      circle.setAttribute(
+        "style",
+        `transform-origin: ${position.x / 10}rem ${position.y / 10}rem`
+      );
 
       elements.svg.appendChild(circle);
     }
-
-    defaultCircleColor = window.getComputedStyle(
-      elements.svg.querySelector("circle")
-    ).fill;
   } else {
     const p = document.createElement("p");
-    p.innerText = text.not_supported;
-    p.setAttribute("class", classes.no_js);
+    p.textContent = text.notSupported;
+    p.setAttribute("class", classes.noJs);
     elements.svgContainer.appendChild(p);
 
     elements.svg.remove();
