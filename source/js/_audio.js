@@ -1,6 +1,4 @@
-"use strict";
-
-import earthPositions from "./_earth.js";
+import earthPositions from "./_earth";
 
 export default () => {
   const elements = {
@@ -18,11 +16,11 @@ export default () => {
     optionMic: document.querySelector('.ChooseInput-option[data-type="mic"]'),
     thresholdPick: document.getElementById("ThresholdPick"),
     svgContainer: document.getElementById("SvgContainer"),
-    svg: document.getElementById("Svg")
+    svg: document.getElementById("Svg"),
   };
 
   const text = {
-    notSupported: "Not supported."
+    notSupported: "Not supported.",
   };
 
   const classes = {
@@ -32,12 +30,12 @@ export default () => {
     active: "is-active",
     audioSelected: "audio-selected",
     audioActive: "audio-active",
-    scaledDown: "scaled-down"
+    scaledDown: "scaled-down",
   };
 
   let threshold = parseInt(elements.thresholdPick.value, 10);
 
-  elements.thresholdPick.addEventListener("input", e => {
+  elements.thresholdPick.addEventListener("input", (e) => {
     threshold = parseInt(e.target.value, 10);
   });
 
@@ -57,21 +55,25 @@ export default () => {
   let stream;
   let audioInitialized;
 
-  elements.fileDrop.addEventListener("drop", e => dropHandler(e), false);
+  elements.fileDrop.addEventListener("drop", (e) => dropHandler(e), false);
   elements.fileDrop.addEventListener(
     "dragover",
-    e => dragOverHandler(e),
+    (e) => dragOverHandler(e),
     false
   );
-  elements.fileDrop.addEventListener("dragend", e => dragEndHandler(e), false);
+  elements.fileDrop.addEventListener(
+    "dragend",
+    (e) => dragEndHandler(e),
+    false
+  );
   elements.fileUpload.addEventListener(
     "change",
-    e => changeFileHandling(e),
+    (e) => changeFileHandling(e),
     false
   );
   elements.audioButton.addEventListener(
     "click",
-    e => audioButtonHandling(e),
+    (e) => audioButtonHandling(e),
     false
   );
   elements.audio.addEventListener("play", playHandling, false);
@@ -86,7 +88,7 @@ export default () => {
     false
   );
 
-  elements.optionFileInput.addEventListener("click", e => {
+  elements.optionFileInput.addEventListener("click", (e) => {
     const elem = e.target;
 
     if (!audioInitialized) {
@@ -101,7 +103,7 @@ export default () => {
     }
   });
 
-  elements.optionMic.addEventListener("click", e => {
+  elements.optionMic.addEventListener("click", (e) => {
     const elem = e.target;
 
     if (!audioInitialized) {
@@ -116,6 +118,9 @@ export default () => {
     }
   });
 
+  /**
+   *
+   */
   function initAudio() {
     context = new AudioContext();
     analyser = context.createAnalyser();
@@ -132,6 +137,10 @@ export default () => {
   /* file input
    ********************************************************* */
 
+  /**
+   *
+   * @param {boolean} openDialog
+   */
   function activateFileInput(openDialog) {
     mode = "file";
     elements.optionFileInput.classList.add(classes.active);
@@ -141,6 +150,9 @@ export default () => {
     }
   }
 
+  /**
+   *
+   */
   function deactivateFileInput() {
     mode = false;
 
@@ -151,6 +163,9 @@ export default () => {
     stopFileInputAnalyzing();
   }
 
+  /**
+   *
+   */
   function stopFileInputAnalyzing() {
     elements.audio.src = "";
     stopDrawing();
@@ -159,18 +174,20 @@ export default () => {
   /* mic
    ********************************************************* */
 
+  /**
+   *
+   */
   function activateMic() {
     mode = "mic";
 
     init = false;
 
     try {
-      elements.optionMic.textContent = elements.optionMic.getAttribute(
-        "data-active-text"
-      );
+      elements.optionMic.textContent =
+        elements.optionMic.getAttribute("data-active-text");
       elements.optionMic.classList.add(classes.active);
 
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((s) => {
         stream = s;
         source = context.createMediaStreamSource(stream);
         source.connect(analyser);
@@ -190,6 +207,9 @@ export default () => {
     }
   }
 
+  /**
+   *
+   */
   function deactivateMic() {
     if (init) {
       return;
@@ -205,9 +225,12 @@ export default () => {
     stopMicAnalyzing();
   }
 
+  /**
+   *
+   */
   function stopMicAnalyzing() {
     if (stream && stream.getTracks()) {
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
     }
 
     pauseDrawing();
@@ -216,6 +239,10 @@ export default () => {
   /* handling
    ********************************************************* */
 
+  /**
+   *
+   * @param {Event} e
+   */
   function audioButtonHandling(e) {
     e.preventDefault();
     const el = e.target;
@@ -227,6 +254,10 @@ export default () => {
     }
   }
 
+  /**
+   *
+   * @param {Event} e
+   */
   function changeFileHandling(e) {
     const file = e.target.files[0];
 
@@ -238,6 +269,9 @@ export default () => {
     elements.fileUpload.value = "";
   }
 
+  /**
+   *
+   */
   function playHandling() {
     requestAnimationFrame(() => {
       elements.svg.classList.remove(classes.scaledDown);
@@ -255,6 +289,9 @@ export default () => {
     init = false;
   }
 
+  /**
+   *
+   */
   function pauseHandling() {
     pauseDrawing();
 
@@ -272,6 +309,10 @@ export default () => {
   /* drag'n'drop
    ********************************************************* */
 
+  /**
+   *
+   * @param {Event} e
+   */
   function dropHandler(e) {
     e.preventDefault();
     // If dropped items aren't files, reject them
@@ -306,11 +347,19 @@ export default () => {
     activateFileInput();
   }
 
+  /**
+   *
+   * @param {Event} e
+   */
   function dragOverHandler(e) {
     e.preventDefault();
     elements.fileDrop.classList.add(classes.active);
   }
 
+  /**
+   *
+   * @param {Event} e
+   */
   function dragEndHandler(e) {
     // Remove all of the drag data
     const dt = e.dataTransfer;
@@ -335,6 +384,9 @@ export default () => {
   /* drawing
    ********************************************************* */
 
+  /**
+   *
+   */
   function draw() {
     requestAnimationFrame(draw);
 
@@ -356,6 +408,9 @@ export default () => {
     }
   }
 
+  /**
+   *
+   */
   function pauseDrawing() {
     window.cancelAnimationFrame(animationFrame);
 
@@ -364,6 +419,9 @@ export default () => {
     }
   }
 
+  /**
+   *
+   */
   function stopDrawing() {
     pauseDrawing();
 
@@ -375,14 +433,22 @@ export default () => {
     elements.progressBar.removeAttribute("style");
   }
 
+  /**
+   *
+   * @param {HTMLElement} circle
+   */
   function clearAnimation(circle) {
     circle.classList.remove("animated");
   }
 
+  /**
+   *
+   */
   function setProgress() {
     requestAnimationFrame(() => {
-      elements.progressBar.style.transform = `translateX(-${100 -
-        100 * (elements.audio.currentTime / duration)}%)`;
+      elements.progressBar.style.transform = `translateX(-${
+        100 - 100 * (elements.audio.currentTime / duration)
+      }%)`;
     });
   }
 

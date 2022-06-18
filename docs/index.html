@@ -2,16 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>music earth - by Michael Großklaus</title>
+    <title>music earth — by Michael Großklaus</title>
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <meta name="description" content="A visualisation of a selected audio file or sounds recorded by your microphone.">
-    <script type="module" src="js/index.js" defer></script>
-    <style>a,body,button,div,h1,h2,h3,h4,h5,h6,html,input,li,p,small,span,strong,ul{margin:0;padding:0;border:0;font:inherit;font-size:100%;vertical-align:baseline;background:none}a,button{font:inherit;color:inherit}button{background:none;border:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0;margin:0}html{font-size:62.5%}body{overflow:hidden;background:#0a181d radial-gradient(hsla(0,0%,100%,.15),hsla(0,0%,100%,0)) 50% no-repeat;background-size:125% 125%;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:1.6rem;line-height:1;color:#fff}main{display:flex;height:100vh}a:not([class]){transition:all .2s ease;transition:var(--transition)}a:not([class]):focus,a:not([class]):hover{color:#ff1493;color:var(--highlight-color)}strong{font-weight:700}h3,p,strong{line-height:1.5}.ChooseInput{position:absolute}.audio-selected .ChooseInput{top:0;left:0;right:50%;z-index:2;padding:2rem 2rem 0;height:20vh;min-width:12em;white-space:nowrap}body:not(.audio-selected) .ChooseInput{top:50%;left:50%;transform:translate(-50%,-50%);z-index:1}.ChooseInput-option{position:relative;padding:0 0 0 1.25em;margin:0 1.5em .5em 0;float:left;text-align:left;cursor:pointer;color:inherit;font-size:inherit}.ChooseInput-option:before{content:"";display:block;position:absolute;top:50%;left:0;transform:translateY(-50%);width:1em;height:1em;font-size:.5em;margin:0 1em 0 0;border-radius:50%;border:1px solid hsla(0,0%,100%,.25)}.ChooseInput-option.is-active:before{border-color:#ff1493;border-color:var(--highlight-color)}.ChooseInput-option:focus,.ChooseInput-option:hover{text-decoration:underline}.SvgContainer{align-self:center;height:100%;margin:0 auto;max-height:80vh;width:80vw}.out-of-viewport{transform:perspective(1000px) rotateY(0) rotateX(0)!important}#Svg{height:100%;opacity:1;transform:scale(1);transition:all 2s cubic-bezier(0,0,0,1);width:100%;will-change:transform}#Svg.scaled-down{opacity:0;transform:scale(.25)}circle.animated{transform:scale(2.5)}circle:not(.animated){fill:hsla(0,0%,100%,.75);transition-duration:.75s}#FileDrop{z-index:1}#FileDrop.is-active{z-index:2}#FileDrop.is-active:after{content:"Drop it!";display:block;font-weight:700;font-size:5em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}.InformationButton{position:absolute;top:0;right:0;left:50%;z-index:4;height:20vh}.InformationButton-element{position:absolute;top:2rem;right:2rem;display:block;width:1em;height:1em;background:#fff;color:#333;border-radius:50%;font-family:Times,Georgia,serif;font-size:1.25em;font-style:italic;transition:all .2s ease;transition:var(--transition)}.InformationButton-element:focus,.InformationButton-element:hover{background:#ff1493;background:var(--highlight-color);color:#fff}#Information{display:flex;background:#111e23;text-align:center;align-items:center;justify-content:space-around;transition:opacity .25s ease}#Information:not(.is-active){z-index:-1;opacity:0}.Overlay{position:absolute;top:0;left:0;right:0;bottom:0}.Overlay.is-active{background:#111e23;z-index:3}.Overlay-title{display:block;margin:0 0 1em}#ProgressBar{left:0;transform:translateX(-100%);height:.15em;background:linear-gradient(90deg,red,#af0,#0fa,#00f,#f0a) no-repeat}#ProgressBar,.Settings{position:absolute;bottom:0;right:0}.Settings{z-index:1;padding:0 2rem 2rem;opacity:0}.Settings-item{display:flex;float:right;margin:.5em 0 0 1.5em}.Settings-input{width:5em;margin-left:.5rem}@media (max-width:40em){.Settings{text-align:center;left:0}}@media (min-width:40.03125em){.Settings{left:50%;padding-top:5em}}.SongInfo{position:absolute;left:0;padding:0 2rem 2rem;z-index:1}.SongInfo:hover{opacity:1}.SongInfo-title{margin:0 1em 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}.SongInfo-button{float:left;display:none;width:0;height:0;margin:0 1em 0 0;text-indent:-9999em}.SongInfo-button--pause,.SongInfo-button--play{display:block}.SongInfo-button--play{border:.5em solid transparent;border-left-color:#fff}.SongInfo-button--pause{position:relative;height:1em;width:1em;font-size:1.6rem}.SongInfo-button--pause:after,.SongInfo-button--pause:before{content:"";display:block;width:.25em;position:absolute;top:0;bottom:0;background:#fff}.SongInfo-button--pause:before{left:0}.SongInfo-button--pause:after{right:.25em}@media (max-width:40em){.SongInfo{bottom:6em;right:0}}@media (min-width:40.03125em){.SongInfo{bottom:0;right:50%;padding-top:5em}}:root{--highlight-color:#ff1493;--transition:all .2s ease}.u-hiddenVisually:not(:focus):not(:active){position:absolute;width:1px;height:1px;margin:-1px;border:0;padding:0;-webkit-clip-path:inset(100%);clip-path:inset(100%);clip:rect(0 0 0 0);overflow:hidden}.audio-active .ChooseInput,.audio-active .InformationButton,.audio-active .Settings,.audio-active .SongInfo{opacity:.1;transition:opacity .5s ease-in}.audio-active .ChooseInput:hover,.audio-active .InformationButton:hover,.audio-active .Settings:hover,.audio-active .SongInfo:hover{opacity:1;transition:opacity .25s ease-out}.NoJs{text-align:center}
-/*# sourceMappingURL=../index.css.map */</style>
+    <script src="/js/index.js" defer></script>
+    <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
     <main>
-      <h1 class="u-hiddenVisually">music earth - by Michael Großklaus</h1>
+      <h1 class="u-hiddenVisually">music earth — by Michael Großklaus</h1>
       <div id="FileDrop" class="Overlay"></div>
       <audio class="u-hiddenVisually" id="Audio"></audio>
       <input class="u-hiddenVisually" id="FileUpload" type="file" accept="audio/*" aria-label="Choose a file">
@@ -46,14 +45,14 @@
         </noscript>
       </div>
       <div class="InformationButton">
-        <button class="InformationButton-element" id="InformationButton" title="Information">i</button>
+        <button class="InformationButton-element" id="InformationButton" aria-label="Information"><span aria-hidden="true">i</span></button>
       </div>
       <div id="Information" class="Overlay">
         <div class="Overlay-content">
           <p>
             <span class="Overlay-title">Created by</span>
-            <strong>Michael Großklaus</strong><br>
-            <a href="https://www.mgrossklaus.de" target="_blank" title="Michael Großklaus - Freelance frontend-developer Hamburg" rel="noopener">mgrossklaus.de</a><br>
+            <b>Michael Großklaus</b><br>
+            <a href="https://www.mgrossklaus.de" target="_blank" rel="noopener">mgrossklaus.de</a><br>
             <a href="https://www.twitter.com/mgrossklaus" target="_blank" rel="noopener">@mgrossklaus</a>
           </p>
         </div>

@@ -1,5 +1,5 @@
-import audio from "./_audio.js";
-import misc from "./_misc.js";
+import audio from "./_audio";
+import misc from "./_misc";
 
 audio();
 misc();

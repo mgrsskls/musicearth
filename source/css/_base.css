@@ -3,13 +3,13 @@ html {
 }
 
 body {
-  overflow: hidden;
   background: hsl(196, 50%, 7.5%) radial-gradient(rgba(255, 255, 255, .15), rgba(255, 255, 255, 0)) center no-repeat;
   background-size: 125% 125%;
+  color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-size: 1.6rem;
   line-height: 1;
-  color: #fff;
+  overflow: hidden;
 }
 
 main {

@@ -4,68 +4,12 @@
   "author": "Michael Großklaus <mail@mgrossklaus.de>",
   "license": "MIT",
   "devDependencies": {
-    "cssnano": "^4.1.8",
-    "del": "^5.1.0",
-    "eslint": "^6.3.0",
-    "eslint-config-prettier": "^6.2.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-eslint": "^6.0.0",
-    "gulp-inline-source": "^4.0.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-stylelint": "^9.0.0",
-    "postcss-import": "^12.0.1",
-    "postcss-preset-env": "^6.5.0",
-    "prettier": "^1.16.4",
-    "rollup": "^1.1.2",
-    "rollup-plugin-terser": "^5.1.1",
-    "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.2.0"
+    "@factorial/stack-core": "^0.4.2",
+    "@factorial/stack-css": "^0.6.4",
+    "@factorial/stack-javascript": "^0.6.7"
   },
   "scripts": {
-    "build": "gulp build"
-  },
-  "stylelint": {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "number-leading-zero": "never"
-    },
-    "ignoreFiles": "build/**"
-  },
-  "postcss": {
-    "plugins": {
-      "postcss-import": {},
-      "postcss-preset-env": {},
-      "cssnano": {}
-    }
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
-  "browserslist": [
-    "last 2 versions",
-    "> 1%",
-    "not dead",
-    "not ie > 0"
-  ]
+    "lint": "factorial lint",
+    "build": "factorial build && cp source/index.html docs"
+  }
 }

@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>music earth - by Michael Großklaus</title>
+    <title>music earth — by Michael Großklaus</title>
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <meta name="description" content="A visualisation of a selected audio file or sounds recorded by your microphone.">
-    <script type="module" src="source/js/index.js" defer></script>
-    <link rel="stylesheet" href="source/css/index.css" inline>
+    <script src="/js/index.js" defer></script>
+    <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
     <main>
-      <h1 class="u-hiddenVisually">music earth - by Michael Großklaus</h1>
+      <h1 class="u-hiddenVisually">music earth — by Michael Großklaus</h1>
       <div id="FileDrop" class="Overlay"></div>
       <audio class="u-hiddenVisually" id="Audio"></audio>
       <input class="u-hiddenVisually" id="FileUpload" type="file" accept="audio/*" aria-label="Choose a file">
@@ -45,14 +45,14 @@
         </noscript>
       </div>
       <div class="InformationButton">
-        <button class="InformationButton-element" id="InformationButton" title="Information">i</button>
+        <button class="InformationButton-element" id="InformationButton" aria-label="Information"><span aria-hidden="true">i</span></button>
       </div>
       <div id="Information" class="Overlay">
         <div class="Overlay-content">
           <p>
             <span class="Overlay-title">Created by</span>
             <b>Michael Großklaus</b><br>
-            <a href="https://www.mgrossklaus.de" target="_blank" title="Michael Großklaus - Freelance frontend-developer" rel="noopener">mgrossklaus.de</a><br>
+            <a href="https://www.mgrossklaus.de" target="_blank" rel="noopener">mgrossklaus.de</a><br>
             <a href="https://www.twitter.com/mgrossklaus" target="_blank" rel="noopener">@mgrossklaus</a>
           </p>
         </div>

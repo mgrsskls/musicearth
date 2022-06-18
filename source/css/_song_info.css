@@ -1,7 +1,7 @@
 .SongInfo {
-  position: absolute;
   left: 0;
   padding: 0 2rem 2rem;
+  position: absolute;
   z-index: 1;
 }
 
@@ -10,20 +10,20 @@
 }
 
 .SongInfo-title {
+  line-height: 1.1;
   margin: 0 1em 0 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .SongInfo-button {
-  float: left;
   display: none;
-  width: 0;
+  float: left;
   height: 0;
   margin: 0 1em 0 0;
   text-indent: -9999em;
+  width: 0;
 }
 
 .SongInfo-button--play,
@@ -37,21 +37,21 @@
 }
 
 .SongInfo-button--pause {
-  position: relative;
-  height: 1em;
-  width: 1em;
   font-size: 1.6rem;
+  height: 1em;
+  position: relative;
+  width: 1em;
 }
 
 .SongInfo-button--pause::before,
 .SongInfo-button--pause::after {
+  background: #fff;
+  bottom: 0;
   content: '';
   display: block;
-  width: .25em;
   position: absolute;
   top: 0;
-  bottom: 0;
-  background: #fff;
+  width: .25em;
 }
 
 .SongInfo-button--pause::before {
@@ -72,7 +72,7 @@
 @media (min-width: 40.03125em) {
   .SongInfo {
     bottom: 0;
-    right: 50%;
     padding-top: 5em;
+    right: 50%;
   }
 }

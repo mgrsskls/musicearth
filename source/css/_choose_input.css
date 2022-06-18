@@ -3,47 +3,47 @@
 }
 
 .audio-selected .ChooseInput {
-  top: 0;
-  left: 0;
-  right: 50%;
-  z-index: 2;
-  padding: 2rem 2rem 0;
   height: 20vh;
+  left: 0;
   min-width: 12em;
+  padding: 2rem 2rem 0;
+  right: 50%;
+  top: 0;
   white-space: nowrap;
+  z-index: 2;
 }
 
 body:not(.audio-selected) .ChooseInput {
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
 .ChooseInput-option {
-  position: relative;
-  padding: 0 0 0 1.25em;
-  margin: 0 1.5em .5em 0;
-  float: left;
-  text-align: left;
-  cursor: pointer;
   color: inherit;
+  cursor: pointer;
+  float: left;
   font-size: inherit;
+  margin: 0 1.5em .5em 0;
+  padding: 0 0 0 1.25em;
+  position: relative;
+  text-align: left;
 }
 
 .ChooseInput-option::before {
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
   content: '';
   display: block;
+  font-size: .5em;
+  height: 1em;
+  left: 0;
+  margin: 0 1em 0 0;
   position: absolute;
   top: 50%;
-  left: 0;
   transform: translateY(-50%);
   width: 1em;
-  height: 1em;
-  font-size: .5em;
-  margin: 0 1em 0 0;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .25);
 }
 
 .ChooseInput-option.is-active::before {

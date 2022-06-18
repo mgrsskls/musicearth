@@ -1,0 +1,416 @@
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+small,
+strong,
+ul,
+li,
+button,
+input {
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+button,
+a {
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: hsl(196, 50%, 7.5%) radial-gradient(rgba(255, 255, 255, .15), rgba(255, 255, 255, 0)) center no-repeat;
+  background-size: 125% 125%;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  overflow: hidden;
+}
+
+main {
+  display: flex;
+  height: 100vh;
+}
+
+a:not([class]) {
+  transition: var(--transition);
+}
+
+a:not([class]):hover,
+a:not([class]):focus {
+  color: var(--highlight-color);
+}
+
+strong {
+  font-weight: bold;
+}
+
+h3,
+strong,
+p {
+  line-height: 1.5;
+}
+
+.ChooseInput {
+  position: absolute;
+}
+
+.audio-selected .ChooseInput {
+  height: 20vh;
+  left: 0;
+  min-width: 12em;
+  padding: 2rem 2rem 0;
+  right: 50%;
+  top: 0;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+body:not(.audio-selected) .ChooseInput {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.ChooseInput-option {
+  color: inherit;
+  cursor: pointer;
+  float: left;
+  font-size: inherit;
+  margin: 0 1.5em .5em 0;
+  padding: 0 0 0 1.25em;
+  position: relative;
+  text-align: left;
+}
+
+.ChooseInput-option::before {
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  content: '';
+  display: block;
+  font-size: .5em;
+  height: 1em;
+  left: 0;
+  margin: 0 1em 0 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em;
+}
+
+.ChooseInput-option.is-active::before {
+  border-color: var(--highlight-color);
+}
+
+.ChooseInput-option:hover,
+.ChooseInput-option:focus {
+  text-decoration: underline;
+}
+
+.SvgContainer {
+  align-self: center;
+  height: 100%;
+  margin: 0 auto;
+  max-height: 80vh;
+  width: 80vw;
+}
+
+.out-of-viewport {
+  transform: perspective(1000px) rotateY(0) rotateX(0) !important;
+}
+
+#Svg {
+  height: 100%;
+  opacity: 1;
+  transform: scale(1);
+  transition: all 2s cubic-bezier(0, 0, 0, 1);
+  width: 100%;
+  will-change: transform;
+}
+
+#Svg.scaled-down {
+  opacity: 0;
+  transform: scale(0.25);
+}
+
+circle.animated {
+  transform: scale(2.5);
+}
+
+circle:not(.animated) {
+  fill: rgba(255, 255, 255, 0.75);
+  transition-duration: 0.75s;
+}
+
+#FileDrop {
+  z-index: 1;
+}
+
+#FileDrop.is-active {
+  z-index: 2;
+}
+
+#FileDrop.is-active::after {
+  content: 'Drop it!';
+  display: block;
+  font-size: 5em;
+  font-weight: bold;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.InformationButton {
+  height: 20vh;
+  left: 50%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 4;
+}
+
+.InformationButton-element {
+  background: #fff;
+  border-radius: 50%;
+  color: #333;
+  display: block;
+  font-family: Times, Georgia, serif;
+  font-size: 1.25em;
+  font-style: italic;
+  height: 1em;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  transition: var(--transition);
+  width: 1em;
+}
+
+.InformationButton-element:hover,
+.InformationButton-element:focus {
+  background: var(--highlight-color);
+  color: #fff;
+}
+
+#Information {
+  align-items: center;
+  background: #111e23;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  transition: opacity .25s ease;
+}
+
+#Information:not(.is-active) {
+  opacity: 0;
+  z-index: -1;
+}
+
+.Overlay {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.Overlay.is-active {
+  background: #111e23;
+  z-index: 3;
+}
+
+.Overlay-title {
+  display: block;
+  margin: 0 0 1em;
+}
+
+#ProgressBar {
+  background:
+    linear-gradient(
+      to right,
+      hsl(0, 100%, 50%),
+      hsl(80, 100%, 50%),
+      hsl(160, 100%, 50%),
+      hsl(240, 100%, 50%),
+      hsl(320, 100%, 50%)
+    ) no-repeat;
+  bottom: 0;
+  height: .15em;
+  left: 0;
+  position: absolute;
+  right: 0;
+  transform: translateX(-100%);
+}
+
+.Settings {
+  bottom: 0;
+  opacity: 0;
+  padding: 0 2rem 2rem;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
+.Settings-item {
+  display: flex;
+  float: right;
+  margin: .5em 0 0 1.5em;
+}
+
+.Settings-input {
+  margin-left: .5rem;
+  width: 5em;
+}
+
+.SongInfo {
+  left: 0;
+  padding: 0 2rem 2rem;
+  position: absolute;
+  z-index: 1;
+}
+
+.SongInfo:hover {
+  opacity: 1;
+}
+
+.SongInfo-title {
+  line-height: 1.1;
+  margin: 0 1em 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.SongInfo-button {
+  display: none;
+  float: left;
+  height: 0;
+  margin: 0 1em 0 0;
+  text-indent: -9999em;
+  width: 0;
+}
+
+.SongInfo-button--play,
+.SongInfo-button--pause {
+  display: block;
+}
+
+.SongInfo-button--play {
+  border: .5em solid transparent;
+  border-left-color: #fff;
+}
+
+.SongInfo-button--pause {
+  font-size: 1.6rem;
+  height: 1em;
+  position: relative;
+  width: 1em;
+}
+
+.SongInfo-button--pause::before,
+.SongInfo-button--pause::after {
+  background: #fff;
+  bottom: 0;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: .25em;
+}
+
+.SongInfo-button--pause::before {
+  left: 0;
+}
+
+.SongInfo-button--pause::after {
+  right: .25em;
+}
+
+:root {
+  --highlight-color: deeppink;
+  --transition: all .2s ease;
+}
+
+.u-hiddenVisually:not(:focus):not(:active) {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.audio-active .ChooseInput,
+.audio-active .SongInfo,
+.audio-active .InformationButton,
+.audio-active .Settings {
+  opacity: .1;
+  transition: opacity .5s ease-in;
+}
+
+.audio-active .ChooseInput:hover,
+.audio-active .SongInfo:hover,
+.audio-active .InformationButton:hover,
+.audio-active .Settings:hover {
+  opacity: 1;
+  transition: opacity .25s ease-out;
+}
+
+.NoJs {
+  text-align: center;
+}
+
+@media (max-width: 40em) {
+  .Settings {
+    left: 0;
+    text-align: center;
+  }
+  .SongInfo {
+    bottom: 6em;
+    right: 0;
+  }
+}
+
+@media (min-width: 40.03125em) {
+  .Settings {
+    left: 50%;
+    padding-top: 5em;
+  }
+  .SongInfo {
+    bottom: 0;
+    padding-top: 5em;
+    right: 50%;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
