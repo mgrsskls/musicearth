@@ -1,17 +1,18 @@
 #ProgressBar {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       to right,
       hsl(0, 100%, 50%),
-      hsl(80, 100%, 50%),
-      hsl(160, 100%, 50%),
+      hsl(30, 100%, 50%),
+      hsl(60, 100%, 50%),
+      hsl(120, 100%, 50%),
       hsl(240, 100%, 50%),
-      hsl(320, 100%, 50%)
-    ) no-repeat;
+      hsl(290, 100%, 50%)
+    )
+    no-repeat;
   bottom: 0;
-  height: .15em;
+  height: 0.15em;
   left: 0;
   position: absolute;
   right: 0;
-  transform: translateX(-100%);
+  transform: translateX(calc(var(--move, 100) * -1%));
 }

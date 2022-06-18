@@ -2092,10 +2092,10 @@
     });
 
     const circlesLen = 512;
+    const circlesLenFromZero = circlesLen - 1;
     const colorMulti = 320 / circlesLen;
     const micButtonText = elements.optionMic.textContent;
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const color = 60;
     let context;
     let analyser;
     let dataArray;
@@ -2250,9 +2250,9 @@
               classes.audioSelected,
               classes.audioActive
             );
-          });
 
-          draw();
+            draw();
+          });
         });
       } catch (e) {
         alert(text.notSupported);
@@ -2334,9 +2334,8 @@
         );
         elements.audioButton.classList.remove(classes.playButton);
         elements.audioButton.classList.add(classes.pauseButton);
+        draw();
       });
-
-      draw();
 
       init = false;
     }
@@ -2440,24 +2439,29 @@
      *
      */
     function draw() {
-      requestAnimationFrame(draw);
-
       analyser.getByteFrequencyData(dataArray);
 
-      for (let i = circlesLen - 1; i >= 0; i -= 1) {
+      for (let i = circlesLenFromZero; i >= 0; i -= 1) {
         const val = dataArray[circlesLen - i];
         const circle = elements.circles[i];
 
         if (val < threshold) {
-          clearAnimation(circle);
+          requestAnimationFrame(() => {
+            clearAnimation(circle);
+          });
         } else {
-          circle.classList.add("animated");
+          requestAnimationFrame(() => {
+            circle.classList.add("animated");
+            circle.style.setProperty("--scale", val);
+          });
         }
       }
 
       if (mode === "file") {
         setProgress();
       }
+
+      requestAnimationFrame(draw);
     }
 
     /**
@@ -2466,7 +2470,7 @@
     function pauseDrawing() {
       window.cancelAnimationFrame(animationFrame);
 
-      for (let i = circlesLen - 1; i >= 0; i -= 1) {
+      for (let i = circlesLenFromZero; i >= 0; i -= 1) {
         clearAnimation(elements.circles[i]);
       }
     }
@@ -2498,9 +2502,10 @@
      */
     function setProgress() {
       requestAnimationFrame(() => {
-        elements.progressBar.style.transform = `translateX(-${
-        100 - 100 * (elements.audio.currentTime / duration)
-      }%)`;
+        elements.progressBar.style.setProperty(
+          "--move",
+          100 - 100 * (elements.audio.currentTime / duration)
+        );
       });
     }
 
@@ -2514,7 +2519,7 @@
         circle.setAttributeNS(null, "r", 1);
         circle.setAttribute("cx", position.x);
         circle.setAttribute("cy", position.y);
-        circle.setAttribute("fill", `hsl(${i * colorMulti + color}, 100%, 50%)`);
+        circle.setAttribute("fill", `hsl(${i * colorMulti}, 100%, 50%)`);
         circle.setAttribute(
           "style",
           `transform-origin: ${position.x / 10}rem ${position.y / 10}rem`
@@ -2543,7 +2548,6 @@
     const classes = {
       active: "is-active",
       audio_active: "audio-active",
-      out_of_viewport: "out-of-viewport",
     };
 
     addInformationButtonListener();

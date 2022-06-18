@@ -142,17 +142,12 @@ body:not(.audio-selected) .ChooseInput {
   width: 80vw;
 }
 
-.out-of-viewport {
-  transform: perspective(1000px) rotateY(0) rotateX(0) !important;
-}
-
 #Svg {
   height: 100%;
   opacity: 1;
   transform: scale(1);
   transition: all 2s cubic-bezier(0, 0, 0, 1);
   width: 100%;
-  will-change: transform;
 }
 
 #Svg.scaled-down {
@@ -160,13 +155,17 @@ body:not(.audio-selected) .ChooseInput {
   transform: scale(0.25);
 }
 
+circle {
+  will-change: transform;
+}
+
 circle.animated {
-  transform: scale(2.5);
+  transform: scale(calc(var(--scale) / 50));
 }
 
 circle:not(.animated) {
   fill: rgba(255, 255, 255, 0.75);
-  transition-duration: 0.75s;
+  transition-duration: 0.5s;
 }
 
 #FileDrop {
@@ -252,21 +251,22 @@ circle:not(.animated) {
 }
 
 #ProgressBar {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       to right,
       hsl(0, 100%, 50%),
-      hsl(80, 100%, 50%),
-      hsl(160, 100%, 50%),
+      hsl(30, 100%, 50%),
+      hsl(60, 100%, 50%),
+      hsl(120, 100%, 50%),
       hsl(240, 100%, 50%),
-      hsl(320, 100%, 50%)
-    ) no-repeat;
+      hsl(290, 100%, 50%)
+    )
+    no-repeat;
   bottom: 0;
-  height: .15em;
+  height: 0.15em;
   left: 0;
   position: absolute;
   right: 0;
-  transform: translateX(-100%);
+  transform: translateX(calc(var(--move, 100) * -1%));
 }
 
 .Settings {

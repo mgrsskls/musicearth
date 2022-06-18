@@ -8,7 +8,6 @@ export default () => {
   const classes = {
     active: "is-active",
     audio_active: "audio-active",
-    out_of_viewport: "out-of-viewport",
   };
 
   addInformationButtonListener();

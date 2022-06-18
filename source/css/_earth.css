@@ -6,17 +6,12 @@
   width: 80vw;
 }
 
-.out-of-viewport {
-  transform: perspective(1000px) rotateY(0) rotateX(0) !important;
-}
-
 #Svg {
   height: 100%;
   opacity: 1;
   transform: scale(1);
   transition: all 2s cubic-bezier(0, 0, 0, 1);
   width: 100%;
-  will-change: transform;
 }
 
 #Svg.scaled-down {
@@ -24,11 +19,15 @@
   transform: scale(0.25);
 }
 
+circle {
+  will-change: transform;
+}
+
 circle.animated {
-  transform: scale(2.5);
+  transform: scale(calc(var(--scale) / 50));
 }
 
 circle:not(.animated) {
   fill: rgba(255, 255, 255, 0.75);
-  transition-duration: 0.75s;
+  transition-duration: 0.5s;
 }
